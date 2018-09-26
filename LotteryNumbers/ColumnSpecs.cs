@@ -47,6 +47,7 @@ namespace LotteryNumbers
         public int Width { get; set; }
     }
 
+
     public enum ColumnHeader
     {
         Date,

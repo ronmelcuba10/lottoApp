@@ -8,7 +8,9 @@ namespace LotteryNumbers
 {
     class PowerBall : Lottery
     {
-        private readonly PatternSection[] powerballPattern; 
+        private readonly PatternSection[] powerballPattern;
+        private const int numberMax = 69;
+        private const int specialNumberMax = 26;
 
         public PowerBall(string appPath) :base(appPath)
         {
@@ -22,8 +24,9 @@ namespace LotteryNumbers
                 PatternSection.number, PatternSection.number, PatternSection.number, PatternSection.number,
                 PatternSection.number, PatternSection.specialnumber, PatternSection.plays};
             UpdateIndexes(powerballPattern);
-            NumberMax = 69;
-            SpecialNumberMax = 26;
+            NumberMax = numberMax;
+            SpecialNumberMax = specialNumberMax;
+            SpecialPlayIndex = 7;
         }
 
     }

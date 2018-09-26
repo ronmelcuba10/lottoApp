@@ -7,7 +7,8 @@ namespace LotteryNumbers
     class MegaMillions : Lottery
     {
         private readonly PatternSection[] megaballPattern;
-        private const int numberMax = ;
+        private const int numberMax = 70;
+        private const int specialNumberMax = 25;
 
         public MegaMillions(string appPath) : base(appPath)
         {
@@ -21,8 +22,9 @@ namespace LotteryNumbers
                 PatternSection.number, PatternSection.number, PatternSection.number, PatternSection.number,
                 PatternSection.number, PatternSection.specialnumber, PatternSection.plays};
             UpdateIndexes(megaballPattern);
-            NumberMax = 70;
-            SpecialNumberMax = 25;
+            NumberMax = numberMax;
+            SpecialNumberMax = specialNumberMax;
+            SpecialPlayIndex = 7;
         }
 
     }

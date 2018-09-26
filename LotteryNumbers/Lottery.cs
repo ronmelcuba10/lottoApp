@@ -17,7 +17,6 @@ namespace LotteryNumbers
         public string Error { get; set; }
         public Drawings Drawings { get; set; }
         public Dictionary<string,string> Headers { get; set; }
-        //public List
         public PatternSection[] Pattern { get; set; }
         public int DefaultNumber => defaultNum;
         public bool AllowRepeatedNums { get; set; }
@@ -30,6 +29,10 @@ namespace LotteryNumbers
         public int MonthIndex { get; private set; }
         public int YearIndex { get; private set; }
         public ColumnSpecs ColumnSpecs { get; set; }
+        public List<int> HiddenColumns { get; set; }
+        
+
+
 
         protected Lottery(string appPath)
         {
@@ -44,6 +47,7 @@ namespace LotteryNumbers
             SpecialNumberIndex = DefaultNumber;
             SpecialPlayIndex = DefaultNumber;
             ColumnSpecs = new ColumnSpecs();
+            HiddenColumns = new List<int>();
         }
 
         protected void UpdateIndexes(PatternSection[] pattern)
@@ -94,7 +98,7 @@ namespace LotteryNumbers
                 int specialNumber = SpecialNumberIndex != DefaultNumber ? int.Parse(str[SpecialNumberIndex]) : DefaultNumber;
                 int specialPlay = SpecialPlayIndex != DefaultNumber && SpecialPlayIndex < str.Length ? int.Parse(str[SpecialPlayIndex]) : DefaultNumber;
                 int[] numbers = NumbersIndexes.ToList().Select(ni => int.Parse(str[ni])).ToArray();
-                return new Numbers(date, numbers, specialNumber, specialPlay);
+                return new Numbers(date, numbers, DefaultNumber, specialNumber, specialPlay);
             }
             catch (Exception ex)
             {
@@ -103,17 +107,18 @@ namespace LotteryNumbers
             return null;
         }
 
-
-        public virtual bool LoadNumbers()
+        public virtual bool LoadNumbers(ToolStripProgressBar tspb)
         {
             List<string> numbers = FileHandler.LoadLines(FilePath);
-
             if (numbers.Count == 0)
                 return false;
             int i = 0;
+            int total = numbers.Count;
 
             foreach (var n in numbers)
             {
+                tspb.Value = (int)((double)i / total * 100);
+
                 var num = BuildNumbers(n);
                 if (num == null)
                 {
@@ -123,25 +128,59 @@ namespace LotteryNumbers
                 Drawings.Add(num);
                 i++;
             }
+            Drawings.Reverse();
             return Drawings.Count > 0;
         }
 
-        public void Bind(DataGridView dgv, BindingSource bd)
+        public void Bind(DataGridView dgv, BindingSource bds, Drawings drawings = null)
         {
-            bd.DataSource = Drawings;
-            dgv.DataSource = bd;
+            bds.DataSource = drawings ?? Drawings;
+            if (drawings != null)
+                HiddenColumns.Add(SpecialPlayIndex);
+            dgv.DataSource = bds;
+            
             foreach (DataGridViewColumn column in dgv.Columns)
             {
                 ColumnSpec cs = ColumnSpecs.GetColumSpec(column.Name);
                 column.HeaderText = cs.Header;
-                //column.Width = cs.Width;
+
+                column.HeaderCell.Style.Alignment = cs.Header == ColumnHeader.Date.ToString() 
+                    ? DataGridViewContentAlignment.MiddleLeft 
+                    : DataGridViewContentAlignment.MiddleCenter;
+
+                column.DefaultCellStyle.Alignment = cs.Header == "#" 
+                    ? DataGridViewContentAlignment.MiddleCenter 
+                    : DataGridViewContentAlignment.MiddleLeft;
             }
-
-
-
-
-
+            HiddenColumns.ForEach(hc => dgv.Columns[hc].Visible = false);
         }
+
+        public void UpdateTextBoxes(DataGridViewRow row, List<TextBox> textBoxes)
+        {
+            textBoxes.ForEach( txtb => txtb.Text = row.Cells[txtb.Name.Remove(0, 3)].Value.ToString());
+        }
+
+
+        public Drawings Generate(int filterIndex, int quantity)
+        {
+            Drawings drawings = new Drawings();
+            for (int i = 0; i < quantity; i++)
+            {
+                while (true)
+                {
+                    Numbers num = new Numbers(DefaultNumber).Generate(5, NumberMax, SpecialNumberMax, DefaultNumber, AllowRepeatedNums);
+                    if (!Drawings.Any(n => n.SameNumCombination(num)))
+                    {
+                        drawings.Add(num);
+                        break;
+                    }
+                }
+            }
+            return drawings;
+        }
+
+
+
 
     }
 
