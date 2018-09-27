@@ -57,6 +57,8 @@
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="MegaMillions.cs" />
+    <Compile Include="NumberOccurrence.cs" />
+    <Compile Include="NumberOccurrenceCollection.cs" />
     <Compile Include="Numbers.cs" />
     <Compile Include="PatternSections.cs" />
     <Compile Include="PowerBall.cs" />

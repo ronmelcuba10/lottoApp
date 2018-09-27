@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-
-namespace LotteryNumbers
+﻿namespace LotteryNumbers
 {
     class MegaMillions : Lottery
     {
         private readonly PatternSection[] megaballPattern;
         private const int numberMax = 70;
         private const int specialNumberMax = 25;
+        private const int historicNumMax = 75;
 
         public MegaMillions(string appPath) : base(appPath)
         {
@@ -24,7 +21,8 @@ namespace LotteryNumbers
             UpdateIndexes(megaballPattern);
             NumberMax = numberMax;
             SpecialNumberMax = specialNumberMax;
-            SpecialPlayIndex = 7;
+            SpecialPlayIndex = 10;
+            HistoricNumMax = historicNumMax;
         }
 
     }

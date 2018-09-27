@@ -53,21 +53,20 @@ namespace LotteryNumbers
             gbxSpecialPlay.Text = lottery.ColumnSpecs.GetColumSpec(ColumnHeader.SpecialPlay.ToString()).Header;
             tslblLotteryName.Text = string.Empty;
             toolStripProgressBar.Value = 0;
+            UpdateNumberOccurrences();
         }
 
 
         private void BtnUpdate_Click(object sender, EventArgs e)
         {
-            List<Lottery> lotteries = Enum.GetValues(typeof(Lotteries)).Cast<int>().Select(l => CreateLottery((int)l)).ToList();
-            lotteries.ForEach( l => {
-                using (WebClient wc = new WebClient())
-                {
-                    tslblLotteryName.Text = string.Format("Downloading winning numbers from {0}", l.Name);
-                    wc.DownloadProgressChanged += Wc_DownloadProgressChanged;
-                    wc.DownloadFileCompleted += Wc_DownloadFileCompleted;
-                    wc.DownloadFileAsync( new Uri(l.Url), l.FilePath);
-                }
-            });
+            Lottery lot = CreateLottery((int)cbxLotteries.SelectedIndex);
+            using (WebClient wc = new WebClient())
+            {
+                tslblLotteryName.Text = string.Format("Downloading winning numbers from {0}", lot.Name);
+                wc.DownloadProgressChanged += Wc_DownloadProgressChanged;
+                wc.DownloadFileCompleted += Wc_DownloadFileCompleted;
+                wc.DownloadFileAsync( new Uri(lot.Url), lot.FilePath);
+            }
         }
 
         private void Wc_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
@@ -88,6 +87,11 @@ namespace LotteryNumbers
 
             LoadAndBindNumbers();
             dgvDrawings.Rows[0].Selected = true;
+        }
+
+        private void UpdateNumberOccurrences()
+        {
+            dgvNumberOccurrences.DataSource = lottery.GetNumbersOrdered(cbxLeastFirst.Checked, cbxByNumber.Checked);
         }
 
         private Lottery CreateLottery(int index)
@@ -146,6 +150,12 @@ namespace LotteryNumbers
             //lottery.Generate(1, (int)nudTotalDrawings.Value);
             lottery.Bind(dgvGenerated, bindingGenerated, lottery.Generate(1, (int)nudTotalDrawings.Value));                
         }
+
+        private void CbxLeastFirst_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateNumberOccurrences();
+        }
+
     }
 
     

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
+﻿using System.IO;
 
 namespace LotteryNumbers
 {
@@ -11,6 +7,7 @@ namespace LotteryNumbers
         private readonly PatternSection[] powerballPattern;
         private const int numberMax = 69;
         private const int specialNumberMax = 26;
+        private const int historicNumMax = 69;
 
         public PowerBall(string appPath) :base(appPath)
         {
@@ -26,7 +23,8 @@ namespace LotteryNumbers
             UpdateIndexes(powerballPattern);
             NumberMax = numberMax;
             SpecialNumberMax = specialNumberMax;
-            SpecialPlayIndex = 7;
+            SpecialPlayIndex = 10;
+            HistoricNumMax = historicNumMax;
         }
 
     }

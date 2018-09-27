@@ -45,6 +45,10 @@
             this.txtNumber1 = new System.Windows.Forms.TextBox();
             this.txtNumber2 = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cbxByNumber = new System.Windows.Forms.CheckBox();
+            this.cbxLeastFirst = new System.Windows.Forms.CheckBox();
+            this.dgvNumberOccurrences = new System.Windows.Forms.DataGridView();
             this.dgvGenerated = new System.Windows.Forms.DataGridView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.nudTotalDrawings = new System.Windows.Forms.NumericUpDown();
@@ -65,6 +69,8 @@
             this.gbxSpecialNumber.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvNumberOccurrences)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGenerated)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudTotalDrawings)).BeginInit();
@@ -248,6 +254,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.groupBox3);
             this.tabPage2.Controls.Add(this.dgvGenerated);
             this.tabPage2.Controls.Add(this.groupBox2);
             this.tabPage2.Controls.Add(this.button1);
@@ -259,6 +266,54 @@
             this.tabPage2.Text = "Stats";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.cbxByNumber);
+            this.groupBox3.Controls.Add(this.cbxLeastFirst);
+            this.groupBox3.Controls.Add(this.dgvNumberOccurrences);
+            this.groupBox3.Location = new System.Drawing.Point(515, 68);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(173, 255);
+            this.groupBox3.TabIndex = 8;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Most && Least";
+            // 
+            // cbxByNumber
+            // 
+            this.cbxByNumber.AutoSize = true;
+            this.cbxByNumber.Location = new System.Drawing.Point(92, 21);
+            this.cbxByNumber.Name = "cbxByNumber";
+            this.cbxByNumber.Size = new System.Drawing.Size(77, 17);
+            this.cbxByNumber.TabIndex = 2;
+            this.cbxByNumber.Text = "by Number";
+            this.cbxByNumber.UseVisualStyleBackColor = true;
+            this.cbxByNumber.CheckedChanged += new System.EventHandler(this.CbxLeastFirst_CheckedChanged);
+            // 
+            // cbxLeastFirst
+            // 
+            this.cbxLeastFirst.AutoSize = true;
+            this.cbxLeastFirst.Location = new System.Drawing.Point(12, 21);
+            this.cbxLeastFirst.Name = "cbxLeastFirst";
+            this.cbxLeastFirst.Size = new System.Drawing.Size(74, 17);
+            this.cbxLeastFirst.TabIndex = 1;
+            this.cbxLeastFirst.Text = "Least First";
+            this.cbxLeastFirst.UseVisualStyleBackColor = true;
+            this.cbxLeastFirst.CheckedChanged += new System.EventHandler(this.CbxLeastFirst_CheckedChanged);
+            // 
+            // dgvNumberOccurrences
+            // 
+            this.dgvNumberOccurrences.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvNumberOccurrences.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvNumberOccurrences.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvNumberOccurrences.Location = new System.Drawing.Point(6, 45);
+            this.dgvNumberOccurrences.Name = "dgvNumberOccurrences";
+            this.dgvNumberOccurrences.ReadOnly = true;
+            this.dgvNumberOccurrences.RowHeadersVisible = false;
+            this.dgvNumberOccurrences.Size = new System.Drawing.Size(161, 204);
+            this.dgvNumberOccurrences.TabIndex = 0;
+            // 
             // dgvGenerated
             // 
             this.dgvGenerated.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
@@ -266,7 +321,7 @@
             this.dgvGenerated.Location = new System.Drawing.Point(6, 68);
             this.dgvGenerated.Name = "dgvGenerated";
             this.dgvGenerated.RowHeadersVisible = false;
-            this.dgvGenerated.Size = new System.Drawing.Size(565, 255);
+            this.dgvGenerated.Size = new System.Drawing.Size(503, 255);
             this.dgvGenerated.TabIndex = 7;
             // 
             // groupBox2
@@ -275,14 +330,15 @@
             this.groupBox2.Controls.Add(this.cbxFilter);
             this.groupBox2.Location = new System.Drawing.Point(6, 6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(565, 56);
+            this.groupBox2.Size = new System.Drawing.Size(575, 56);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Filter";
             // 
             // nudTotalDrawings
             // 
-            this.nudTotalDrawings.Location = new System.Drawing.Point(453, 19);
+            this.nudTotalDrawings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.nudTotalDrawings.Location = new System.Drawing.Point(467, 19);
             this.nudTotalDrawings.Maximum = new decimal(new int[] {
             20,
             0,
@@ -304,18 +360,20 @@
             // 
             // cbxFilter
             // 
+            this.cbxFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cbxFilter.FormattingEnabled = true;
             this.cbxFilter.Location = new System.Drawing.Point(6, 19);
             this.cbxFilter.Name = "cbxFilter";
-            this.cbxFilter.Size = new System.Drawing.Size(441, 21);
+            this.cbxFilter.Size = new System.Drawing.Size(455, 21);
             this.cbxFilter.TabIndex = 4;
             // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(589, 36);
+            this.button1.Location = new System.Drawing.Point(587, 16);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(88, 59);
+            this.button1.Size = new System.Drawing.Size(101, 46);
             this.button1.TabIndex = 5;
             this.button1.Text = "Generate";
             this.button1.UseVisualStyleBackColor = true;
@@ -341,6 +399,7 @@
             this.btnUpdate.TabIndex = 4;
             this.btnUpdate.Text = "Update";
             this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.BtnUpdate_Click);
             // 
             // cbxLotteries
             // 
@@ -354,8 +413,8 @@
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tslblLotteryName,
-            this.toolStripProgressBar});
+            this.toolStripProgressBar,
+            this.tslblLotteryName});
             this.statusStrip1.Location = new System.Drawing.Point(0, 436);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(726, 22);
@@ -364,9 +423,8 @@
             // 
             // tslblLotteryName
             // 
-            this.tslblLotteryName.AutoSize = false;
             this.tslblLotteryName.Name = "tslblLotteryName";
-            this.tslblLotteryName.Size = new System.Drawing.Size(250, 17);
+            this.tslblLotteryName.Size = new System.Drawing.Size(0, 17);
             // 
             // toolStripProgressBar
             // 
@@ -401,6 +459,9 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvNumberOccurrences)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGenerated)).EndInit();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nudTotalDrawings)).EndInit();
@@ -442,6 +503,10 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ComboBox cbxFilter;
         private System.Windows.Forms.NumericUpDown nudTotalDrawings;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.CheckBox cbxLeastFirst;
+        private System.Windows.Forms.DataGridView dgvNumberOccurrences;
+        private System.Windows.Forms.CheckBox cbxByNumber;
     }
 }
 

@@ -30,6 +30,7 @@ namespace LotteryNumbers
         public int YearIndex { get; private set; }
         public ColumnSpecs ColumnSpecs { get; set; }
         public List<int> HiddenColumns { get; set; }
+        public int HistoricNumMax { get; set; }
         
 
 
@@ -135,8 +136,8 @@ namespace LotteryNumbers
         public void Bind(DataGridView dgv, BindingSource bds, Drawings drawings = null)
         {
             bds.DataSource = drawings ?? Drawings;
-            if (drawings != null)
-                HiddenColumns.Add(SpecialPlayIndex);
+            //if (drawings != null)
+            //    HiddenColumns.Add(SpecialPlayIndex);
             dgv.DataSource = bds;
             
             foreach (DataGridViewColumn column in dgv.Columns)
@@ -178,6 +179,24 @@ namespace LotteryNumbers
             }
             return drawings;
         }
+
+        public List<NumberOccurrence> GetNumbersOrdered(bool leastFirst, bool byNumbers)
+        {
+            int[] nums = new int[HistoricNumMax];
+            // gets all the ocurrences of all the numbers
+            Drawings.ForEach( d => {
+                d.NumsSet().ToList().ForEach( n => nums[n - 1]++);
+            });
+
+            NumberOccurrenceCollection noC = new NumberOccurrenceCollection();
+            for (int i = 0; i < HistoricNumMax; i++)
+                noC.Add(new NumberOccurrence(i + 1, nums[i]));
+            
+            return leastFirst 
+                ? noC.OrderBy(n => byNumbers ? n.Number : n.Occurrence).ToList() 
+                : noC.OrderByDescending(n => byNumbers ? n.Number : n.Occurrence).ToList();
+        }
+
 
 
 
