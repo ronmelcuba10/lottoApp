@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace LotteryNumbers
 {
@@ -56,6 +57,7 @@ namespace LotteryNumbers
             for (int i = 0; i < numbers.Length; i++)
             {
                 int thisNum;
+                //Thread.Sleep(2);
                 while (true)
                 {
                     thisNum = random.Next(maxNum + 1);
@@ -81,6 +83,8 @@ namespace LotteryNumbers
         {
             return new HashSet<int>(numbers);
         }
+
+        public DateTime GetDate() => date;
 
 
 

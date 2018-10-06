@@ -51,15 +51,17 @@
             this.dgvNumberOccurrences = new System.Windows.Forms.DataGridView();
             this.dgvGenerated = new System.Windows.Forms.DataGridView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cbxFilterOptions = new System.Windows.Forms.ComboBox();
             this.nudTotalDrawings = new System.Windows.Forms.NumericUpDown();
             this.cbxFilter = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnGenerate = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.cbxLotteries = new System.Windows.Forms.ComboBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.tslblLotteryName = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.tslblLotteryName = new System.Windows.Forms.ToolStripStatusLabel();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.gbxDate.SuspendLayout();
@@ -76,6 +78,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudTotalDrawings)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -254,10 +257,10 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.groupBox6);
             this.tabPage2.Controls.Add(this.groupBox3);
             this.tabPage2.Controls.Add(this.dgvGenerated);
             this.tabPage2.Controls.Add(this.groupBox2);
-            this.tabPage2.Controls.Add(this.button1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -271,9 +274,9 @@
             this.groupBox3.Controls.Add(this.cbxByNumber);
             this.groupBox3.Controls.Add(this.cbxLeastFirst);
             this.groupBox3.Controls.Add(this.dgvNumberOccurrences);
-            this.groupBox3.Location = new System.Drawing.Point(515, 68);
+            this.groupBox3.Location = new System.Drawing.Point(351, 68);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(173, 255);
+            this.groupBox3.Size = new System.Drawing.Size(337, 255);
             this.groupBox3.TabIndex = 8;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Most && Least";
@@ -311,7 +314,7 @@
             this.dgvNumberOccurrences.Name = "dgvNumberOccurrences";
             this.dgvNumberOccurrences.ReadOnly = true;
             this.dgvNumberOccurrences.RowHeadersVisible = false;
-            this.dgvNumberOccurrences.Size = new System.Drawing.Size(161, 204);
+            this.dgvNumberOccurrences.Size = new System.Drawing.Size(325, 204);
             this.dgvNumberOccurrences.TabIndex = 0;
             // 
             // dgvGenerated
@@ -321,24 +324,38 @@
             this.dgvGenerated.Location = new System.Drawing.Point(6, 68);
             this.dgvGenerated.Name = "dgvGenerated";
             this.dgvGenerated.RowHeadersVisible = false;
-            this.dgvGenerated.Size = new System.Drawing.Size(503, 255);
+            this.dgvGenerated.Size = new System.Drawing.Size(339, 255);
             this.dgvGenerated.TabIndex = 7;
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.nudTotalDrawings);
+            this.groupBox2.Controls.Add(this.cbxFilterOptions);
             this.groupBox2.Controls.Add(this.cbxFilter);
-            this.groupBox2.Location = new System.Drawing.Point(6, 6);
+            this.groupBox2.Location = new System.Drawing.Point(351, 6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(575, 56);
+            this.groupBox2.Size = new System.Drawing.Size(331, 56);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Filter";
             // 
+            // cbxFilterOptions
+            // 
+            this.cbxFilterOptions.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.cbxFilterOptions.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxFilterOptions.FormattingEnabled = true;
+            this.cbxFilterOptions.Items.AddRange(new object[] {
+            "All",
+            "By Month"});
+            this.cbxFilterOptions.Location = new System.Drawing.Point(193, 17);
+            this.cbxFilterOptions.Name = "cbxFilterOptions";
+            this.cbxFilterOptions.Size = new System.Drawing.Size(132, 21);
+            this.cbxFilterOptions.TabIndex = 6;
+            this.cbxFilterOptions.SelectedIndexChanged += new System.EventHandler(this.CbxFilterOptions_SelectedIndexChanged);
+            // 
             // nudTotalDrawings
             // 
-            this.nudTotalDrawings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.nudTotalDrawings.Location = new System.Drawing.Point(467, 19);
+            this.nudTotalDrawings.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.nudTotalDrawings.Location = new System.Drawing.Point(6, 19);
             this.nudTotalDrawings.Maximum = new decimal(new int[] {
             20,
             0,
@@ -350,7 +367,7 @@
             0,
             0});
             this.nudTotalDrawings.Name = "nudTotalDrawings";
-            this.nudTotalDrawings.Size = new System.Drawing.Size(99, 20);
+            this.nudTotalDrawings.Size = new System.Drawing.Size(125, 20);
             this.nudTotalDrawings.TabIndex = 5;
             this.nudTotalDrawings.Value = new decimal(new int[] {
             10,
@@ -360,24 +377,25 @@
             // 
             // cbxFilter
             // 
-            this.cbxFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxFilter.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.cbxFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxFilter.FormattingEnabled = true;
-            this.cbxFilter.Location = new System.Drawing.Point(6, 19);
+            this.cbxFilter.Location = new System.Drawing.Point(12, 18);
             this.cbxFilter.Name = "cbxFilter";
-            this.cbxFilter.Size = new System.Drawing.Size(455, 21);
+            this.cbxFilter.Size = new System.Drawing.Size(175, 21);
             this.cbxFilter.TabIndex = 4;
+            this.cbxFilter.SelectedIndexChanged += new System.EventHandler(this.CbxFilter_SelectedIndexChanged);
             // 
-            // button1
+            // btnGenerate
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(587, 16);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(101, 46);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Generate";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.Button1_Click);
+            this.btnGenerate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnGenerate.Location = new System.Drawing.Point(137, 19);
+            this.btnGenerate.Name = "btnGenerate";
+            this.btnGenerate.Size = new System.Drawing.Size(196, 25);
+            this.btnGenerate.TabIndex = 5;
+            this.btnGenerate.Text = "Generate";
+            this.btnGenerate.UseVisualStyleBackColor = true;
+            this.btnGenerate.Click += new System.EventHandler(this.BtnGenerate_Click);
             // 
             // groupBox5
             // 
@@ -421,17 +439,28 @@
             this.statusStrip1.TabIndex = 5;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // tslblLotteryName
-            // 
-            this.tslblLotteryName.Name = "tslblLotteryName";
-            this.tslblLotteryName.Size = new System.Drawing.Size(0, 17);
-            // 
             // toolStripProgressBar
             // 
             this.toolStripProgressBar.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripProgressBar.AutoSize = false;
             this.toolStripProgressBar.Name = "toolStripProgressBar";
             this.toolStripProgressBar.Size = new System.Drawing.Size(100, 16);
+            // 
+            // tslblLotteryName
+            // 
+            this.tslblLotteryName.Name = "tslblLotteryName";
+            this.tslblLotteryName.Size = new System.Drawing.Size(0, 17);
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.btnGenerate);
+            this.groupBox6.Controls.Add(this.nudTotalDrawings);
+            this.groupBox6.Location = new System.Drawing.Point(6, 6);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(339, 56);
+            this.groupBox6.TabIndex = 9;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Generation Section";
             // 
             // FrmMain
             // 
@@ -443,7 +472,7 @@
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FrmMain";
-            this.Text = "Lottery Numbers Generator";
+            this.Text = "All";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.tabControl1.ResumeLayout(false);
@@ -468,6 +497,7 @@
             this.groupBox5.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -497,7 +527,7 @@
         private System.Windows.Forms.ToolStripStatusLabel tslblLotteryName;
         private System.Windows.Forms.GroupBox gbxDate;
         private System.Windows.Forms.TextBox txtDate;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnGenerate;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.DataGridView dgvGenerated;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -507,6 +537,8 @@
         private System.Windows.Forms.CheckBox cbxLeastFirst;
         private System.Windows.Forms.DataGridView dgvNumberOccurrences;
         private System.Windows.Forms.CheckBox cbxByNumber;
+        private System.Windows.Forms.ComboBox cbxFilterOptions;
+        private System.Windows.Forms.GroupBox groupBox6;
     }
 }
 

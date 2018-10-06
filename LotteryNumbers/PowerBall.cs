@@ -11,7 +11,7 @@ namespace LotteryNumbers
 
         public PowerBall(string appPath) :base(appPath)
         {
-            Name = Lotteries.Powerball.ToString();
+            Name = EnumLotteries.Powerball.ToString();
             FilePath = Path.Combine(appPath,FileName);
             ColumnSpecs.OverrideColumnName(ColumnHeader.SpecialNumber, "Power Ball");
             ColumnSpecs.OverrideColumnName(ColumnHeader.SpecialPlay, "Power Play");

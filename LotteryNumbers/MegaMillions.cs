@@ -9,7 +9,7 @@
 
         public MegaMillions(string appPath) : base(appPath)
         {
-            Name = Lotteries.MegaMillions.ToString();
+            Name = EnumLotteries.MegaMillions.ToString();
             FilePath = System.IO.Path.Combine(appPath, FileName);
             ColumnSpecs.OverrideColumnName(ColumnHeader.SpecialNumber, "Mega Ball");
             ColumnSpecs.OverrideColumnName(ColumnHeader.SpecialPlay, "Megaplier");

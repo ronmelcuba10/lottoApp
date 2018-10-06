@@ -108,6 +108,7 @@ namespace LotteryNumbers
             return null;
         }
 
+
         public virtual bool LoadNumbers(ToolStripProgressBar tspb)
         {
             List<string> numbers = FileHandler.LoadLines(FilePath);
@@ -161,6 +162,16 @@ namespace LotteryNumbers
             textBoxes.ForEach( txtb => txtb.Text = row.Cells[txtb.Name.Remove(0, 3)].Value.ToString());
         }
 
+        public List<NumberOccurrence> GetNumbersFilterdOrdered(
+            bool leastFirst, bool byNumbers, Func<Numbers,bool> condition = null)
+        {
+            if (condition == null) return GetNumbersOrdered(Drawings, leastFirst, byNumbers);
+
+            Drawings drw = new Drawings();
+            drw.AddRange(Drawings.Where(d => condition(d)));
+            return GetNumbersOrdered(drw, leastFirst, byNumbers);
+        }
+
 
         public Drawings Generate(int filterIndex, int quantity)
         {
@@ -180,11 +191,12 @@ namespace LotteryNumbers
             return drawings;
         }
 
-        public List<NumberOccurrence> GetNumbersOrdered(bool leastFirst, bool byNumbers)
+
+        public List<NumberOccurrence> GetNumbersOrdered(Drawings drws, bool leastFirst, bool byNumbers)
         {
             int[] nums = new int[HistoricNumMax];
             // gets all the ocurrences of all the numbers
-            Drawings.ForEach( d => {
+            drws.ForEach( d => {
                 d.NumsSet().ToList().ForEach( n => nums[n - 1]++);
             });
 
@@ -200,13 +212,6 @@ namespace LotteryNumbers
 
 
 
-
-    }
-
-    public enum Lotteries
-    {
-        Powerball,
-        MegaMillions
     }
 
 

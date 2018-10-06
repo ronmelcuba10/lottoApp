@@ -49,6 +49,8 @@
     <Compile Include="ColumnSpecs.cs" />
     <Compile Include="Drawings.cs" />
     <Compile Include="FileHandler.cs" />
+    <Compile Include="EnumFilterOptions.cs" />
+    <Compile Include="EnumLotteries.cs" />
     <Compile Include="Lottery.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
@@ -57,10 +59,12 @@
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="MegaMillions.cs" />
+    <Compile Include="EnumMonthsFilter.cs" />
+    <Compile Include="EnumMonthTerms.cs" />
     <Compile Include="NumberOccurrence.cs" />
     <Compile Include="NumberOccurrenceCollection.cs" />
     <Compile Include="Numbers.cs" />
-    <Compile Include="PatternSections.cs" />
+    <Compile Include="EnumPatternSections.cs" />
     <Compile Include="PowerBall.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
