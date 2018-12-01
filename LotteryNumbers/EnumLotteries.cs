@@ -3,7 +3,8 @@
     public enum EnumLotteries
     {
         Powerball,
-        MegaMillions
+        MegaMillions,
+        Cash4Life
     }
 
 

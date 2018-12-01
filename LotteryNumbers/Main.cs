@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Net;
@@ -18,6 +17,7 @@ namespace LotteryNumbers
         private readonly Color absentNumberColor = Color.DarkSlateBlue;
         private readonly Color presentNumberColor = SystemColors.Control;
         private List<Task> tasks;
+        
 
         public FrmMain()
         {
@@ -36,7 +36,6 @@ namespace LotteryNumbers
 
         private void InitializeLotteries()
         {
-            //Enum.GetValues(typeof(Lotteries)).Cast<int>().ToList().ForEach(l => cbxLotteries.Items.Add(((Lotteries)l).ToString()));
             cbxLotteries.DataSource = Enum.GetValues(typeof(EnumLotteries));
             cbxFilter.DataSource = Enum.GetValues(typeof(EnumFilterOptions));
             cbxLotteries.SelectedIndex = 0;
@@ -57,8 +56,13 @@ namespace LotteryNumbers
             tslblLotteryName.Text = string.Empty;
             toolStripProgressBar.Value = 0;
             UpdateNumberOccurrences();
+            CleanGeneratedNumbers();
         }
 
+        private void CleanGeneratedNumbers()
+        {
+            dgvGenerated.DataSource = null;
+        }
 
         private void BtnUpdate_Click(object sender, EventArgs e)
         {
@@ -101,6 +105,8 @@ namespace LotteryNumbers
                     return new PowerBall(AppDomain.CurrentDomain.BaseDirectory);
                 case (int)EnumLotteries.MegaMillions:
                     return new MegaMillions(AppDomain.CurrentDomain.BaseDirectory);
+                case (int)EnumLotteries.Cash4Life:
+                    return new CashForLife(AppDomain.CurrentDomain.BaseDirectory);
                 default:
                     return null;
             }
@@ -120,10 +126,16 @@ namespace LotteryNumbers
         {
             // gets the grid row
             var rowsCount = dgvDrawings.SelectedRows.Count;
-            if (rowsCount == 0 || rowsCount > 1) return;
+            if (rowsCount == 0 || rowsCount > 1)
+            {
+                return;
+            }
 
             var row = dgvDrawings.SelectedRows[0];
-            if (row == null) return;
+            if (row == null)
+            {
+                return;
+            }
 
             // List of text boxes to be updated
             List<TextBox> textBoxes = new List<TextBox> {
@@ -179,6 +191,11 @@ namespace LotteryNumbers
             UpdateNumberOccurrences();
         }
 
+        /// <summary>
+        /// Updates the FilterOption dropdown list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CbxFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -229,6 +246,7 @@ namespace LotteryNumbers
             {
                 case (int)EnumFilterOptions.ByMonth:
                     condition = num => num.GetDate().Month == cbxFilterOptions.SelectedIndex + 1;
+
                     break;
                 case (int)EnumFilterOptions.ByTheLastTerm:
                     condition = num => DateTime.Compare(num.GetDate(), GetDateToCompareTo()) > 0;
@@ -241,8 +259,11 @@ namespace LotteryNumbers
                     break;
             }
 
-            dgvNumberOccurrences.DataSource = lottery.GetNumbersFilterdOrdered(cbxLeastFirst.Checked, cbxByNumber.Checked, condition);
+            dgvNumberOccurrences.DataSource = lottery.GetRegularNumbersFilterdOrdered(cbxLeastFirst.Checked, cbxByNumber.Checked, condition);
+            dgvSpecialNumbersOcurrences.DataSource = lottery.GetSpecialNumbersFilterdOrdered(cbxLeastFirst.Checked, cbxByNumber.Checked, condition);
+
         }
+
 
         /// <summary>
         /// Returns the date from when the numbers are meet the filter option condition

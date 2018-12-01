@@ -45,6 +45,9 @@
             this.txtNumber1 = new System.Windows.Forms.TextBox();
             this.txtNumber2 = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.btnGenerate = new System.Windows.Forms.Button();
+            this.nudTotalDrawings = new System.Windows.Forms.NumericUpDown();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.cbxByNumber = new System.Windows.Forms.CheckBox();
             this.cbxLeastFirst = new System.Windows.Forms.CheckBox();
@@ -52,16 +55,16 @@
             this.dgvGenerated = new System.Windows.Forms.DataGridView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.cbxFilterOptions = new System.Windows.Forms.ComboBox();
-            this.nudTotalDrawings = new System.Windows.Forms.NumericUpDown();
             this.cbxFilter = new System.Windows.Forms.ComboBox();
-            this.btnGenerate = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.cbxLotteries = new System.Windows.Forms.ComboBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.tslblLotteryName = new System.Windows.Forms.ToolStripStatusLabel();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.dgvSpecialNumbersOcurrences = new System.Windows.Forms.DataGridView();
+            this.lblRegularNumbers = new System.Windows.Forms.Label();
+            this.lblSpecialNumbers = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.gbxDate.SuspendLayout();
@@ -71,14 +74,15 @@
             this.gbxSpecialNumber.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTotalDrawings)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNumberOccurrences)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGenerated)).BeginInit();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudTotalDrawings)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSpecialNumbersOcurrences)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -91,7 +95,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 71);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(702, 355);
+            this.tabControl1.Size = new System.Drawing.Size(718, 406);
             this.tabControl1.TabIndex = 1;
             // 
             // tabPage1
@@ -104,7 +108,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(694, 329);
+            this.tabPage1.Size = new System.Drawing.Size(710, 380);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Numbers";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -136,7 +140,7 @@
             this.groupBox4.Controls.Add(this.dgvDrawings);
             this.groupBox4.Location = new System.Drawing.Point(6, 65);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(678, 258);
+            this.groupBox4.Size = new System.Drawing.Size(694, 309);
             this.groupBox4.TabIndex = 8;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Past Numers";
@@ -153,7 +157,7 @@
             this.dgvDrawings.ReadOnly = true;
             this.dgvDrawings.RowHeadersVisible = false;
             this.dgvDrawings.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDrawings.Size = new System.Drawing.Size(662, 233);
+            this.dgvDrawings.Size = new System.Drawing.Size(678, 284);
             this.dgvDrawings.TabIndex = 0;
             this.dgvDrawings.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DgvDrawings_CellFormatting);
             this.dgvDrawings.SelectionChanged += new System.EventHandler(this.DgvDrawings_SelectionChanged);
@@ -264,19 +268,69 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(694, 329);
+            this.tabPage2.Size = new System.Drawing.Size(710, 380);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Stats";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.btnGenerate);
+            this.groupBox6.Controls.Add(this.nudTotalDrawings);
+            this.groupBox6.Location = new System.Drawing.Point(6, 6);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(339, 56);
+            this.groupBox6.TabIndex = 9;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Generation Section";
+            // 
+            // btnGenerate
+            // 
+            this.btnGenerate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnGenerate.Location = new System.Drawing.Point(137, 19);
+            this.btnGenerate.Name = "btnGenerate";
+            this.btnGenerate.Size = new System.Drawing.Size(196, 25);
+            this.btnGenerate.TabIndex = 5;
+            this.btnGenerate.Text = "Generate";
+            this.btnGenerate.UseVisualStyleBackColor = true;
+            this.btnGenerate.Click += new System.EventHandler(this.BtnGenerate_Click);
+            // 
+            // nudTotalDrawings
+            // 
+            this.nudTotalDrawings.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.nudTotalDrawings.Location = new System.Drawing.Point(6, 19);
+            this.nudTotalDrawings.Maximum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            this.nudTotalDrawings.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.nudTotalDrawings.Name = "nudTotalDrawings";
+            this.nudTotalDrawings.Size = new System.Drawing.Size(125, 20);
+            this.nudTotalDrawings.TabIndex = 5;
+            this.nudTotalDrawings.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
             // groupBox3
             // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox3.Controls.Add(this.lblSpecialNumbers);
+            this.groupBox3.Controls.Add(this.lblRegularNumbers);
+            this.groupBox3.Controls.Add(this.dgvSpecialNumbersOcurrences);
             this.groupBox3.Controls.Add(this.cbxByNumber);
             this.groupBox3.Controls.Add(this.cbxLeastFirst);
             this.groupBox3.Controls.Add(this.dgvNumberOccurrences);
             this.groupBox3.Location = new System.Drawing.Point(351, 68);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(337, 255);
+            this.groupBox3.Size = new System.Drawing.Size(349, 304);
             this.groupBox3.TabIndex = 8;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Most && Least";
@@ -305,35 +359,38 @@
             // 
             // dgvNumberOccurrences
             // 
-            this.dgvNumberOccurrences.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvNumberOccurrences.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.dgvNumberOccurrences.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvNumberOccurrences.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvNumberOccurrences.Location = new System.Drawing.Point(6, 45);
+            this.dgvNumberOccurrences.Location = new System.Drawing.Point(6, 73);
             this.dgvNumberOccurrences.Name = "dgvNumberOccurrences";
             this.dgvNumberOccurrences.ReadOnly = true;
             this.dgvNumberOccurrences.RowHeadersVisible = false;
-            this.dgvNumberOccurrences.Size = new System.Drawing.Size(325, 204);
+            this.dgvNumberOccurrences.Size = new System.Drawing.Size(163, 225);
             this.dgvNumberOccurrences.TabIndex = 0;
             // 
             // dgvGenerated
             // 
+            this.dgvGenerated.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.dgvGenerated.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvGenerated.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvGenerated.Location = new System.Drawing.Point(6, 68);
             this.dgvGenerated.Name = "dgvGenerated";
             this.dgvGenerated.RowHeadersVisible = false;
-            this.dgvGenerated.Size = new System.Drawing.Size(339, 255);
+            this.dgvGenerated.Size = new System.Drawing.Size(339, 304);
             this.dgvGenerated.TabIndex = 7;
             // 
             // groupBox2
             // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.cbxFilterOptions);
             this.groupBox2.Controls.Add(this.cbxFilter);
             this.groupBox2.Location = new System.Drawing.Point(351, 6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(331, 56);
+            this.groupBox2.Size = new System.Drawing.Size(349, 56);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Filter";
@@ -346,64 +403,32 @@
             this.cbxFilterOptions.Items.AddRange(new object[] {
             "All",
             "By Month"});
-            this.cbxFilterOptions.Location = new System.Drawing.Point(193, 17);
+            this.cbxFilterOptions.Location = new System.Drawing.Point(202, 17);
             this.cbxFilterOptions.Name = "cbxFilterOptions";
             this.cbxFilterOptions.Size = new System.Drawing.Size(132, 21);
             this.cbxFilterOptions.TabIndex = 6;
             this.cbxFilterOptions.SelectedIndexChanged += new System.EventHandler(this.CbxFilterOptions_SelectedIndexChanged);
-            // 
-            // nudTotalDrawings
-            // 
-            this.nudTotalDrawings.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.nudTotalDrawings.Location = new System.Drawing.Point(6, 19);
-            this.nudTotalDrawings.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.nudTotalDrawings.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.nudTotalDrawings.Name = "nudTotalDrawings";
-            this.nudTotalDrawings.Size = new System.Drawing.Size(125, 20);
-            this.nudTotalDrawings.TabIndex = 5;
-            this.nudTotalDrawings.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
             // 
             // cbxFilter
             // 
             this.cbxFilter.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.cbxFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxFilter.FormattingEnabled = true;
-            this.cbxFilter.Location = new System.Drawing.Point(12, 18);
+            this.cbxFilter.Location = new System.Drawing.Point(21, 18);
             this.cbxFilter.Name = "cbxFilter";
             this.cbxFilter.Size = new System.Drawing.Size(175, 21);
             this.cbxFilter.TabIndex = 4;
             this.cbxFilter.SelectedIndexChanged += new System.EventHandler(this.CbxFilter_SelectedIndexChanged);
             // 
-            // btnGenerate
-            // 
-            this.btnGenerate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnGenerate.Location = new System.Drawing.Point(137, 19);
-            this.btnGenerate.Name = "btnGenerate";
-            this.btnGenerate.Size = new System.Drawing.Size(196, 25);
-            this.btnGenerate.TabIndex = 5;
-            this.btnGenerate.Text = "Generate";
-            this.btnGenerate.UseVisualStyleBackColor = true;
-            this.btnGenerate.Click += new System.EventHandler(this.BtnGenerate_Click);
-            // 
             // groupBox5
             // 
+            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox5.Controls.Add(this.btnUpdate);
             this.groupBox5.Controls.Add(this.cbxLotteries);
             this.groupBox5.Location = new System.Drawing.Point(12, 12);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(702, 51);
+            this.groupBox5.Size = new System.Drawing.Size(714, 51);
             this.groupBox5.TabIndex = 4;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Lottery";
@@ -411,7 +436,7 @@
             // btnUpdate
             // 
             this.btnUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnUpdate.Location = new System.Drawing.Point(572, 19);
+            this.btnUpdate.Location = new System.Drawing.Point(584, 19);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(120, 21);
             this.btnUpdate.TabIndex = 4;
@@ -433,9 +458,9 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar,
             this.tslblLotteryName});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 436);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 487);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(726, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(742, 22);
             this.statusStrip1.TabIndex = 5;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -451,22 +476,42 @@
             this.tslblLotteryName.Name = "tslblLotteryName";
             this.tslblLotteryName.Size = new System.Drawing.Size(0, 17);
             // 
-            // groupBox6
+            // dgvSpecialNumbersOcurrences
             // 
-            this.groupBox6.Controls.Add(this.btnGenerate);
-            this.groupBox6.Controls.Add(this.nudTotalDrawings);
-            this.groupBox6.Location = new System.Drawing.Point(6, 6);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(339, 56);
-            this.groupBox6.TabIndex = 9;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Generation Section";
+            this.dgvSpecialNumbersOcurrences.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvSpecialNumbersOcurrences.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvSpecialNumbersOcurrences.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSpecialNumbersOcurrences.Location = new System.Drawing.Point(174, 73);
+            this.dgvSpecialNumbersOcurrences.Name = "dgvSpecialNumbersOcurrences";
+            this.dgvSpecialNumbersOcurrences.ReadOnly = true;
+            this.dgvSpecialNumbersOcurrences.RowHeadersVisible = false;
+            this.dgvSpecialNumbersOcurrences.Size = new System.Drawing.Size(169, 225);
+            this.dgvSpecialNumbersOcurrences.TabIndex = 3;
+            // 
+            // lblRegularNumbers
+            // 
+            this.lblRegularNumbers.AutoSize = true;
+            this.lblRegularNumbers.Location = new System.Drawing.Point(3, 57);
+            this.lblRegularNumbers.Name = "lblRegularNumbers";
+            this.lblRegularNumbers.Size = new System.Drawing.Size(49, 13);
+            this.lblRegularNumbers.TabIndex = 4;
+            this.lblRegularNumbers.Text = "Numbers";
+            // 
+            // lblSpecialNumbers
+            // 
+            this.lblSpecialNumbers.AutoSize = true;
+            this.lblSpecialNumbers.Location = new System.Drawing.Point(171, 57);
+            this.lblSpecialNumbers.Name = "lblSpecialNumbers";
+            this.lblSpecialNumbers.Size = new System.Drawing.Size(87, 13);
+            this.lblSpecialNumbers.TabIndex = 5;
+            this.lblSpecialNumbers.Text = "Special Numbers";
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(726, 458);
+            this.ClientSize = new System.Drawing.Size(742, 509);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.tabControl1);
@@ -488,16 +533,17 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.nudTotalDrawings)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNumberOccurrences)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGenerated)).EndInit();
             this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.nudTotalDrawings)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSpecialNumbersOcurrences)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -539,6 +585,9 @@
         private System.Windows.Forms.CheckBox cbxByNumber;
         private System.Windows.Forms.ComboBox cbxFilterOptions;
         private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.DataGridView dgvSpecialNumbersOcurrences;
+        private System.Windows.Forms.Label lblSpecialNumbers;
+        private System.Windows.Forms.Label lblRegularNumbers;
     }
 }
 

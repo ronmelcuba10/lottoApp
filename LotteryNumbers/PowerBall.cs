@@ -1,13 +1,15 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 
 namespace LotteryNumbers
 {
-    class PowerBall : Lottery
+    public class PowerBall : Lottery
     {
         private readonly PatternSection[] powerballPattern;
         private const int numberMax = 69;
         private const int specialNumberMax = 26;
         private const int historicNumMax = 69;
+        private const int historicSpecialNumMax = 39;
 
         public PowerBall(string appPath) :base(appPath)
         {
@@ -25,6 +27,7 @@ namespace LotteryNumbers
             SpecialNumberMax = specialNumberMax;
             SpecialPlayIndex = 10;
             HistoricNumMax = historicNumMax;
+            HistoricSpecialNumMax = historicSpecialNumMax;
         }
 
     }

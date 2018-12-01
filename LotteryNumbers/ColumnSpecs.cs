@@ -9,7 +9,7 @@ namespace LotteryNumbers
             Add(ColumnHeader.Date.ToString(), new ColumnSpec(ColumnHeader.Date.ToString(), 200));
             Add(ColumnHeader.SpecialNumber.ToString(), new ColumnSpec(ColumnHeader.SpecialNumber.ToString(), 200));
             Add(ColumnHeader.SpecialPlay.ToString(), new ColumnSpec(ColumnHeader.SpecialPlay.ToString(), 200));
-            Add(ColumnHeader.Number.ToString(), new ColumnSpec("#", 20));
+            Add(ColumnHeader.Number.ToString(), new ColumnSpec(Constants.NUMBER_HEADER, 20));
         }
 
         public ColumnSpec GetColumSpec(string keyStr)

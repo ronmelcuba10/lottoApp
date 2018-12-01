@@ -53,21 +53,19 @@ namespace LotteryNumbers
             date = DateTime.Today;
             if (numQty > numbers.Length)
                 return null;
-            Random random = new Random(DateTime.Now.Millisecond);
             for (int i = 0; i < numbers.Length; i++)
             {
                 int thisNum;
-                //Thread.Sleep(2);
                 while (true)
                 {
-                    thisNum = random.Next(maxNum + 1);
+                    thisNum = ThreadSafeRandom.ThisThreadsRandom.Next(maxNum + 1);
                     if (allowRepeatedNums || !NumsSet().Contains(thisNum))
                         break;
                 }
                 numbers[i] = i < numQty ? thisNum : defaultNum;
             }
-            specialNumber = random.Next(maxSpecNum + 1);
-            specialPlay = random.Next(maxSpecPlay + 1);
+            specialNumber = ThreadSafeRandom.ThisThreadsRandom.Next(maxSpecNum + 1);
+            specialPlay = ThreadSafeRandom.ThisThreadsRandom.Next(maxSpecPlay + 1);
             return this;
         }
 
@@ -86,11 +84,16 @@ namespace LotteryNumbers
 
         public DateTime GetDate() => date;
 
+    }
 
 
+    public static class ThreadSafeRandom
+    {
+        [ThreadStatic] private static Random Local;
 
-
-
-
+        public static Random ThisThreadsRandom
+        {
+            get { return Local ?? (Local = new Random(unchecked(Environment.TickCount * 31 + Thread.CurrentThread.ManagedThreadId))); }
+        }
     }
 }

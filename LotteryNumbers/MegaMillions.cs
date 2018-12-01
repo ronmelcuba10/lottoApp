@@ -1,11 +1,12 @@
 ﻿namespace LotteryNumbers
 {
-    class MegaMillions : Lottery
+    public class MegaMillions : Lottery
     {
         private readonly PatternSection[] megaballPattern;
         private const int numberMax = 70;
         private const int specialNumberMax = 25;
         private const int historicNumMax = 75;
+        private const int historicSpecialNumMax = 52;
 
         public MegaMillions(string appPath) : base(appPath)
         {
@@ -23,6 +24,7 @@
             SpecialNumberMax = specialNumberMax;
             SpecialPlayIndex = 10;
             HistoricNumMax = historicNumMax;
+            HistoricSpecialNumMax = historicSpecialNumMax;
         }
 
     }

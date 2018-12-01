@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace LotteryNumbers
 {
@@ -31,7 +32,8 @@ namespace LotteryNumbers
         public ColumnSpecs ColumnSpecs { get; set; }
         public List<int> HiddenColumns { get; set; }
         public int HistoricNumMax { get; set; }
-        
+        public int HistoricSpecialNumMax { get; set; }
+
 
 
 
@@ -150,10 +152,15 @@ namespace LotteryNumbers
                     ? DataGridViewContentAlignment.MiddleLeft 
                     : DataGridViewContentAlignment.MiddleCenter;
 
-                column.DefaultCellStyle.Alignment = cs.Header == "#" 
+                column.DefaultCellStyle.Alignment = cs.Header == Constants.NUMBER_HEADER 
                     ? DataGridViewContentAlignment.MiddleCenter 
                     : DataGridViewContentAlignment.MiddleLeft;
             }
+            foreach (DataGridViewColumn dgvColumn in dgv.Columns)
+            {
+                dgvColumn.Visible = true;
+            }
+
             HiddenColumns.ForEach(hc => dgv.Columns[hc].Visible = false);
         }
 
@@ -162,15 +169,38 @@ namespace LotteryNumbers
             textBoxes.ForEach( txtb => txtb.Text = row.Cells[txtb.Name.Remove(0, 3)].Value.ToString());
         }
 
-        public List<NumberOccurrence> GetNumbersFilterdOrdered(
-            bool leastFirst, bool byNumbers, Func<Numbers,bool> condition = null)
+
+        public List<NumberOccurrence> GetNumbersFilteredOrdered(
+            bool leastFirst,
+            bool byNumbers,
+            Func<Drawings, bool, bool, List<NumberOccurrence>> selectedNumbers,
+            Func<Numbers, bool> condition = null)
         {
-            if (condition == null) return GetNumbersOrdered(Drawings, leastFirst, byNumbers);
+            if (condition == null)
+            {
+                return selectedNumbers(Drawings, leastFirst, byNumbers);
+            }
 
             Drawings drw = new Drawings();
             drw.AddRange(Drawings.Where(d => condition(d)));
-            return GetNumbersOrdered(drw, leastFirst, byNumbers);
+            return selectedNumbers(drw, leastFirst, byNumbers);
         }
+
+
+        public List<NumberOccurrence> GetRegularNumbersFilterdOrdered(
+            bool leastFirst, bool byNumbers, Func<Numbers,bool> condition = null)
+        {
+            return GetNumbersFilteredOrdered(leastFirst, byNumbers, GetNumbersOrdered, condition);
+        }
+
+
+        public List<NumberOccurrence> GetSpecialNumbersFilterdOrdered(
+            bool leastFirst, bool byNumbers, Func<Numbers, bool> condition = null)
+        {
+            return GetNumbersFilteredOrdered(leastFirst, byNumbers, GetSpecialNumbersOrdered, condition);
+        }
+
+
 
 
         public Drawings Generate(int filterIndex, int quantity)
@@ -192,11 +222,11 @@ namespace LotteryNumbers
         }
 
 
-        public List<NumberOccurrence> GetNumbersOrdered(Drawings drws, bool leastFirst, bool byNumbers)
+        public List<NumberOccurrence> GetNumbersOrdered(Drawings drawings, bool leastFirst, bool byNumbers)
         {
             int[] nums = new int[HistoricNumMax];
             // gets all the ocurrences of all the numbers
-            drws.ForEach( d => {
+            drawings.ForEach( d => {
                 d.NumsSet().ToList().ForEach( n => nums[n - 1]++);
             });
 
@@ -209,6 +239,21 @@ namespace LotteryNumbers
                 : noC.OrderByDescending(n => byNumbers ? n.Number : n.Occurrence).ToList();
         }
 
+
+        public List<NumberOccurrence> GetSpecialNumbersOrdered(Drawings drawings, bool leastFirst, bool byNumbers)
+        {
+            int[] nums = new int[HistoricSpecialNumMax];
+            // gets all the ocurrences of all the spacial numbers
+            drawings.ForEach(d => nums[d.SpecialNumber - 1]++);
+
+            NumberOccurrenceCollection noC = new NumberOccurrenceCollection();
+            for (int i = 0; i < HistoricSpecialNumMax; i++)
+                noC.Add(new NumberOccurrence(i + 1, nums[i]));
+
+            return leastFirst
+                ? noC.OrderBy(n => byNumbers ? n.Number : n.Occurrence).ToList()
+                : noC.OrderByDescending(n => byNumbers ? n.Number : n.Occurrence).ToList();
+        }
 
 
 
