@@ -225,29 +225,55 @@ namespace LotteryNumbers
         public List<NumberOccurrence> GetNumbersOrdered(Drawings drawings, bool leastFirst, bool byNumbers)
         {
             int[] nums = new int[HistoricNumMax];
-            // gets all the ocurrences of all the numbers
-            drawings.ForEach( d => {
-                d.NumsSet().ToList().ForEach( n => nums[n - 1]++);
-            });
+            void lambda(Numbers number) => number.NumsSet().ToList().ForEach(n => nums[n - 1]++);
+            return GetAnyNumbersOrdered(drawings, leastFirst, byNumbers, lambda, nums, HistoricNumMax);
 
-            NumberOccurrenceCollection noC = new NumberOccurrenceCollection();
-            for (int i = 0; i < HistoricNumMax; i++)
-                noC.Add(new NumberOccurrence(i + 1, nums[i]));
-            
-            return leastFirst 
-                ? noC.OrderBy(n => byNumbers ? n.Number : n.Occurrence).ToList() 
-                : noC.OrderByDescending(n => byNumbers ? n.Number : n.Occurrence).ToList();
+
+
+            //// gets all the ocurrences of all the numbers
+            //drawings.ForEach( d => {
+            //    d.NumsSet().ToList().ForEach( n => nums[n - 1]++);
+            //});
+
+            //NumberOccurrenceCollection noC = new NumberOccurrenceCollection();
+            //for (int i = 0; i < HistoricNumMax; i++)
+            //    noC.Add(new NumberOccurrence(i + 1, nums[i]));
+
+            //return leastFirst 
+            //    ? noC.OrderBy(n => byNumbers ? n.Number : n.Occurrence).ToList() 
+            //    : noC.OrderByDescending(n => byNumbers ? n.Number : n.Occurrence).ToList();
         }
 
 
         public List<NumberOccurrence> GetSpecialNumbersOrdered(Drawings drawings, bool leastFirst, bool byNumbers)
         {
             int[] nums = new int[HistoricSpecialNumMax];
-            // gets all the ocurrences of all the spacial numbers
-            drawings.ForEach(d => nums[d.SpecialNumber - 1]++);
+            void lambda(Numbers number) => nums[number.SpecialNumber - 1]++;
+            return GetAnyNumbersOrdered(drawings, leastFirst, byNumbers, lambda, nums, HistoricSpecialNumMax);
+
+
+            //int[] nums = new int[HistoricSpecialNumMax];
+            //// gets all the ocurrences of all the spacial numbers
+            //drawings.ForEach(d => nums[d.SpecialNumber - 1]++);
+
+            //NumberOccurrenceCollection noC = new NumberOccurrenceCollection();
+            //for (int i = 0; i < HistoricSpecialNumMax; i++)
+            //    noC.Add(new NumberOccurrence(i + 1, nums[i]));
+
+            //return leastFirst
+            //    ? noC.OrderBy(n => byNumbers ? n.Number : n.Occurrence).ToList()
+            //    : noC.OrderByDescending(n => byNumbers ? n.Number : n.Occurrence).ToList();
+
+
+        }
+
+        public List<NumberOccurrence> GetAnyNumbersOrdered(Drawings drawings, bool leastFirst, bool byNumbers, Action<Numbers> action, int[] nums, int maxNum)
+        {
+            // gets all the ocurrences of all the numbers
+            drawings.ForEach(action);
 
             NumberOccurrenceCollection noC = new NumberOccurrenceCollection();
-            for (int i = 0; i < HistoricSpecialNumMax; i++)
+            for (int i = 0; i < maxNum; i++)
                 noC.Add(new NumberOccurrence(i + 1, nums[i]));
 
             return leastFirst
